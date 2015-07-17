@@ -498,7 +498,7 @@ function showAdditionalService() {
         timeout: 3000,
         success: function (data) {
             $.each(data, function (i, row) {
-                $('#additional_service_list').append('<li>' + '<a href="#" data-identity="' + row.id + '">' +  buildAdditionalServiceHTML(row) + '</a>' + '</li>');   
+                $('#additional_service_list').append('<li id=' + row.id + '>' + '<a href="#>' +  buildAdditionalServiceHTML(row) + '</a>' + '</li>');   
             });
              $("#additional_service_list").listview("refresh");
         },
@@ -514,24 +514,26 @@ function showAdditionalService() {
 function bookCar() {
     var new_order_id;
     var restURL = "WebApp/services/post/orders";
-    var queryParam = "?account_id="+current_account_id+
-                     "&car_id="+current_car_id+
-                     "&get_service_location_id="+pick_up_location_id +
-                     "&get_date_time="+getFormattedDate($('#pick_up_date').datebox('getTheDate'),$('#pick_up_time').datebox('getTheDate'))+
-                     "&put_service_location_id="+ ((drop_off_location_id>0) ? drop_off_location_id : pick_up_location_id)+     
-                     "&put_date_time="+getFormattedDate($('#drop_off_date').datebox('getTheDate'),$('#drop_off_time').datebox('getTheDate'));
+    var queryParam = "?account_id=" + current_account_id +
+            "&car_id=" + current_car_id +
+            "&get_service_location_id=" + pick_up_location_id +
+            "&get_date_time=" + getFormattedDate($('#pick_up_date').datebox('getTheDate'), $('#pick_up_time').datebox('getTheDate')) +
+            "&put_service_location_id=" + ((drop_off_location_id > 0) ? drop_off_location_id : pick_up_location_id) +
+            "&put_date_time=" + getFormattedDate($('#drop_off_date').datebox('getTheDate'), $('#drop_off_time').datebox('getTheDate'));
     $.ajax({
         url: rootURL + restURL + queryParam,
         type: 'GET',
-        dataType: 'jsonp', 
+        dataType: 'jsonp',
         jsonp: 'callback',
         jsonpCallback: 'order',
         timeout: 3000,
-        success: function () {
-          $.each(data, function (i, row) {
+        success: function (data) {
+            $.each(data, function (i, row) {
                 new_order_id = row.id;
-            });  
-             //toast(ORDER_CREATE);
+            });
+            bookAdditionalService(new_order_id);
+
+            //toast(ORDER_CREATE);
             //$.mobile.changePage($("#main_page"), {transition: "none"});
         },
         error: function () {
@@ -541,20 +543,19 @@ function bookCar() {
 }
 
 function bookAdditionalService(order_id) {
-    var additionalServiceData;
+
+    var additionalServiceData = "";
     
     $('#additional_service_list li').each(function(i,elem) {
-        alert(elem.data('identity'));
+        var additional_service_id = elem.id;
+        var additional_number = $(this).find(".additional_number").val();
+        if (additional_number !== "") {
+           additionalServiceData = additionalServiceData + "" + additional_service_id + "," + additional_number+ ";";  
+        }
     });
-    
-    
-    var restURL = "WebApp/services/post/orders";
-    var queryParam = "?account_id="+current_account_id+
-                     "&car_id="+current_car_id+
-                     "&get_service_location_id="+pick_up_location_id +
-                     "&get_date_time="+getFormattedDate($('#pick_up_date').datebox('getTheDate'),$('#pick_up_time').datebox('getTheDate'))+
-                     "&put_service_location_id="+ ((drop_off_location_id>0) ? drop_off_location_id : pick_up_location_id)+     
-                     "&put_date_time="+getFormattedDate($('#drop_off_date').datebox('getTheDate'),$('#drop_off_time').datebox('getTheDate'));
+   
+    var restURL = "WebApp/services/post/order_details";
+    var queryParam = "?orders_id="+order_id+"&additional_service_data="+additionalServiceData;
     $.ajax({
         url: rootURL + restURL + queryParam,
         type: 'GET',
@@ -563,9 +564,6 @@ function bookAdditionalService(order_id) {
         jsonpCallback: 'order',
         timeout: 3000,
         success: function () {
-            $.each(data, function (i, row) {
-                new_order_id =  row.id;   
-            });
             toast(ORDER_CREATE);
             $.mobile.changePage($("#main_page"), {transition: "none"});
         },
@@ -621,7 +619,7 @@ function buildAdditionalServiceHTML(row) {
             '<div class="additional_price"> month: '+ current_currency +  ' ' +  row.price_month +'</div>' + 
         '</div>' +
         '<div class="additional_right">' +
-            '<input id="additional_number" class="additional_number" type="number" value="">'+
+            '<input class="additional_number" type="number" value="">'+
         '</div>' +
     '</div>';
   
