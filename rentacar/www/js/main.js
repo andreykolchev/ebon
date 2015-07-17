@@ -20,7 +20,7 @@ var dataStorage = window.localStorage;
 //var rootURL = dataStorage['rootURL'];
 var localLanguage = 'ru';
 var localLanguageId = 2;
-var rootURL = "http://134.249.132.85:8090/";
+var rootURL = "http://192.168.0.10:8090/";;
 
 
 var LOADING;
@@ -227,7 +227,6 @@ $('#currency_list3').on('click', 'li a', function () {
     $( "#popupCurrency3" ).popup("close");
     showCarInformation();
 });
-
 /*-----------------------------list-----------------------------*/
 
 
@@ -400,7 +399,6 @@ function showCities() {
     });
 }
 
-
 function showLocations() {
     var restURL = "WebApp/services/get/service_location";
     var queryParam = "?city_id=" + current_city_id + "&language_id=" + localLanguageId;
@@ -513,7 +511,74 @@ function showAdditionalService() {
     });
 }
 
- 
+function bookCar() {
+    var new_order_id;
+    var restURL = "WebApp/services/post/orders";
+    var queryParam = "?account_id="+current_account_id+
+                     "&car_id="+current_car_id+
+                     "&get_service_location_id="+pick_up_location_id +
+                     "&get_date_time="+getFormattedDate($('#pick_up_date').datebox('getTheDate'),$('#pick_up_time').datebox('getTheDate'))+
+                     "&put_service_location_id="+ ((drop_off_location_id>0) ? drop_off_location_id : pick_up_location_id)+     
+                     "&put_date_time="+getFormattedDate($('#drop_off_date').datebox('getTheDate'),$('#drop_off_time').datebox('getTheDate'));
+    $.ajax({
+        url: rootURL + restURL + queryParam,
+        type: 'GET',
+        dataType: 'jsonp', 
+        jsonp: 'callback',
+        jsonpCallback: 'order',
+        timeout: 3000,
+        success: function () {
+          $.each(data, function (i, row) {
+                new_order_id = row.id;
+            });  
+             //toast(ORDER_CREATE);
+            //$.mobile.changePage($("#main_page"), {transition: "none"});
+        },
+        error: function () {
+            alert(ERROR);
+        }
+    });
+}
+
+function bookAdditionalService(order_id) {
+    var additionalServiceData;
+    
+    $('#additional_service_list li').each(function(i,elem) {
+        alert(elem.data('identity'));
+    });
+    
+    
+    var restURL = "WebApp/services/post/orders";
+    var queryParam = "?account_id="+current_account_id+
+                     "&car_id="+current_car_id+
+                     "&get_service_location_id="+pick_up_location_id +
+                     "&get_date_time="+getFormattedDate($('#pick_up_date').datebox('getTheDate'),$('#pick_up_time').datebox('getTheDate'))+
+                     "&put_service_location_id="+ ((drop_off_location_id>0) ? drop_off_location_id : pick_up_location_id)+     
+                     "&put_date_time="+getFormattedDate($('#drop_off_date').datebox('getTheDate'),$('#drop_off_time').datebox('getTheDate'));
+    $.ajax({
+        url: rootURL + restURL + queryParam,
+        type: 'GET',
+        dataType: 'jsonp', 
+        jsonp: 'callback',
+        jsonpCallback: 'order',
+        timeout: 3000,
+        success: function () {
+            $.each(data, function (i, row) {
+                new_order_id =  row.id;   
+            });
+            toast(ORDER_CREATE);
+            $.mobile.changePage($("#main_page"), {transition: "none"});
+        },
+        error: function () {
+            alert(ERROR);
+        }
+    });
+}
+
+/*-----------------------------ajax-----------------------------*/
+
+
+/*-----------------------------buildHTML-----------------------------*/
 function buildCarInfoHTML(row) {
     
     var CarInfoHTML;
@@ -562,32 +627,4 @@ function buildAdditionalServiceHTML(row) {
   
     return AdditionalServiceHTML;
  }
- 
-function bookCar() {
-    var restURL = "WebApp/services/post/orders";
-    var queryParam = "?account_id="+current_account_id+
-                     "&car_id="+current_car_id+
-                     "&get_service_location_id="+pick_up_location_id +
-                     "&get_date_time="+getFormattedDate($('#pick_up_date').datebox('getTheDate'),$('#pick_up_time').datebox('getTheDate'))+
-                     "&put_service_location_id="+ ((drop_off_location_id>0) ? drop_off_location_id : pick_up_location_id)+     
-                     "&put_date_time="+getFormattedDate($('#drop_off_date').datebox('getTheDate'),$('#drop_off_time').datebox('getTheDate'));
-    $.ajax({
-        url: rootURL + restURL + queryParam,
-        type: 'GET',
-        dataType: 'jsonp', 
-        jsonp: 'callback',
-        jsonpCallback: 'order',
-        timeout: 3000,
-        success: function () {
-            toast(ORDER_CREATE);
-            $.mobile.changePage($("#main_page"), {transition: "none"});
-        },
-        error: function () {
-            alert(ERROR);
-        }
-    });
-}
-/*-----------------------------ajax-----------------------------*/
-
-
-
+/*-----------------------------buildHTML-----------------------------*/
