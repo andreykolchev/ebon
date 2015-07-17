@@ -15,6 +15,8 @@ import com.restfully.webapp.model.Order_details;
 import com.restfully.webapp.model.Orders;
 import com.restfully.webapp.model.Payment_cards;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -74,20 +76,41 @@ public class PostRESTService {
     @GET
     @Path("/order_details")
     @Produces("application/javascript")
-    public String createDriver (@QueryParam("callback") String callback,
+    public String createOrderDetails (@QueryParam("callback") String callback,
                                  @QueryParam("orders_id") int orders_id,
-                                 @QueryParam("additional_service_id") int additional_service_id,
-                                 @QueryParam("number") int number,
-                                 @QueryParam("price") int price
+                                 @QueryParam("additional_service_data") String additional_service_data
                                 ) throws SQLException {
-        int id = 0;
         
-        Order_details order_details = new Order_details(id, orders_id, additional_service_id, number, price);
-           
-        order_details = order_detailsDAO.create(order_details);
+        List<Order_details> order_detailsList = new ArrayList<Order_details>();
         
-        return (callback + "([" + order_details.toJsonString() + "])");
+        String[] as_items = additional_service_data.split(";");
+        for (String item : as_items) {
+            int n = item.indexOf(",");
+            int additional_service_id = Integer.parseInt(item.substring(0, n));
+            int number = Integer.parseInt(item.substring(n + 1));
+            int id = 0;
+            int price = 0;
+            Order_details order_details = new Order_details(id, orders_id, additional_service_id, number, price);
+            order_detailsList.add(order_details);
+        }
         
+        if (!order_detailsList.isEmpty()) {
+            order_detailsList = order_detailsDAO.create(order_detailsList);
+        }
+        
+        if (order_detailsList.isEmpty()) {
+            return (callback + "()");
+        }
+        
+        StringBuilder jsonStringBuilder = new StringBuilder();
+        int i = 0;
+        for (Order_details order_details : order_detailsList) {
+            jsonStringBuilder.append(order_details.toJsonString());
+            if (++i < order_detailsList.size()) {
+                jsonStringBuilder.append(",");
+            }
+        }
+        return (callback + "([" + jsonStringBuilder.toString() + "])");
     }
        
     @GET

@@ -66,16 +66,12 @@ public class Order_detailsDAO {
         return null;
     }
 
-    public Order_details create(Order_details order_details) throws SQLException {
+    public List<Order_details> create(List<Order_details> order_detailsList) throws SQLException {
         String table_name = "order_details";
         int up_key = 1;
-
-        order_details.id = new MySQL().getNextId(table_name);
-
-        try {
-            connection = MySQL.getConnection();
-            statement = connection.createStatement();
-            String insertSQL = "INSERT INTO order_details (id,"
+        for (Order_details order_details : order_detailsList) {
+            order_details.id = MySQL.getNextId(table_name);
+            String insertSQL = "INSERT INTO rentalcars.order_details (id,"
                     + " orders_id,"
                     + " additional_service_id,"
                     + " number,"
@@ -87,14 +83,18 @@ public class Order_detailsDAO {
                     + Integer.toString(order_details.number) + ", "
                     + Integer.toString(order_details.price) + ", "
                     + Integer.toString(up_key) + ");";
-
-            statement.executeUpdate(insertSQL);
-        } catch (SQLException ex) {
-            log.info(ex.getMessage());
-        } finally {
-            MySQL.closeConnection(connection, statement);
+            try {
+                connection = MySQL.getConnection();
+                statement = connection.createStatement();
+                statement.executeUpdate(insertSQL);
+            } catch (SQLException ex) {
+                order_detailsList.clear();
+                log.info(ex.getMessage());
+            } finally {
+                MySQL.closeConnection(connection, statement);
+            }
         }
-        return order_details;
+        return order_detailsList;
     }
 
 }
