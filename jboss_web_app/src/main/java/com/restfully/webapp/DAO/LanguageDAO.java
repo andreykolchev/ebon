@@ -26,7 +26,7 @@ public class LanguageDAO {
                 TextQuery = MySQL.addLine(TextQuery);
                 TextQuery = TextQuery + "id = " + Integer.toString(id);
             }
-            if (!(name.equals(""))) {
+            if (name != null && !(name.equals(""))) {
                 TextQuery = MySQL.addLine(TextQuery);
                 TextQuery = TextQuery + "name = \"" + name + "\"";
             }
@@ -41,7 +41,7 @@ public class LanguageDAO {
                 if (id == 0) {
                     id_this = resultSet.getInt("id");
                 }
-                if (!(name.equals(""))) {
+                if (name != null && !(name.equals(""))) {
                     name_this = resultSet.getString("name");
                 }
                 Language language = new Language(id_this, name_this);
@@ -53,7 +53,7 @@ public class LanguageDAO {
                 if (id == 0) {
                     id_this = resultSet.getInt("id");
                 }
-                if (!(name.equals(""))) {
+                if (name != null && !(name.equals(""))) {
                     name_this = resultSet.getString("name");
                 }
                 Language language = new Language(id_this, name_this);

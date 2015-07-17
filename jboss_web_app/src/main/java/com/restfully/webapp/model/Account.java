@@ -27,7 +27,7 @@ public class Account {
         String JsonString;
         JsonString = "";
         JsonString = JsonString + "\"id\":" + id;
-        if (!(user_name.equals("")))
+        if (user_name != null && !(user_name.equals("")))
             {if (!(JsonString.equals("")))
             {JsonString = JsonString + ",";}
             JsonString = JsonString + "\"user_name\":" + user_name + "\"";}
