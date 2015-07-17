@@ -3,6 +3,9 @@ package com.restfully.webapp.DAO;
 /**
  *
  * @author 2015 Dmitry Suvorov mailto: suvdima@gmail.com
+ * huy
+ * huy
+ * huy
  */
 import com.restfully.webapp.model.Account;
 import java.util.ArrayList;
@@ -22,7 +25,7 @@ public class AccountDAO {
         String TextQuery;
         try {
             TextQuery = "";
-            if (!(user_name.equals(""))) {
+            if (user_name != null && !(user_name.equals(""))) {
                 TextQuery = MySQL.addLine(TextQuery);
                 TextQuery = TextQuery + "user_name = \"" + user_name + "\"";
             }
@@ -34,7 +37,7 @@ public class AccountDAO {
             while (resultSet.next()) {
                 String username = "";
                 int id = resultSet.getInt("id");
-                if (!(user_name.equals(""))) {
+                if (user_name != null && !(user_name.equals(""))) {
                     username = resultSet.getString("user_name");
                 }
                 String pass = resultSet.getString("pass");

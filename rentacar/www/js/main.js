@@ -19,19 +19,7 @@ var dataStorage = window.localStorage;
 //var localLanguageId = dataStorage['localLanguageId'];
 //var rootURL = dataStorage['rootURL'];
 var localLanguage = 'ru';
-var localLanguageId = 1;
-
-//jopa
-//jopa
-//jopa
-//jopa
-//jopa
-//jopa
-//jopa
-//jopa
-//jopa
-
-
+var localLanguageId = 2;
 var rootURL = "http://192.168.0.10:8090/";;
 
 
