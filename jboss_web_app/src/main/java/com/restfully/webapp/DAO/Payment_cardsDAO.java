@@ -30,7 +30,7 @@ public class Payment_cardsDAO {
                 TextQuery = MySQL.addLine(TextQuery);
                 TextQuery = TextQuery + "account_id = " + Integer.toString(account_id);
             }
-            if (!(holder_name.equals(""))) {
+            if (holder_name != null && !(holder_name.equals(""))) {
                 TextQuery = MySQL.addLine(TextQuery);
                 TextQuery = TextQuery + "holder_name = \"" + holder_name + "\"";
             }
@@ -64,7 +64,7 @@ public class Payment_cardsDAO {
                 if (account_id == 0) {
                     accountid = resultSet.getInt("account_id");
                 }
-                if (!(holder_name.equals(""))) {
+                if (holder_name != null && !(holder_name.equals(""))) {
                     holdername = resultSet.getString("holder_name");
                 }
                 if (number == 0) {
