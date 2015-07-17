@@ -31,7 +31,7 @@ public class Payment_cards {
             {if (!(JsonString.equals("")))
             {JsonString = JsonString + ",";}
             JsonString = JsonString + "\"account_id\":" + account_id;}
-        if (!(holder_name.equals("")))
+        if (holder_name != null && !(holder_name.equals("")))
             {if (!(JsonString.equals("")))
             {JsonString = JsonString + ",";}
             JsonString = JsonString + "\"holder_name\":" + holder_name + "\"";}

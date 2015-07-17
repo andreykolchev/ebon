@@ -39,7 +39,7 @@ public class Orders {
             {if (!(JsonString.equals("")))
             {JsonString = JsonString + ",";}
             JsonString = JsonString + "\"order_number\":" + order_number;}
-        if (!(order_date.equals("")))
+        if (order_date != null && !(order_date.equals("")))
             {if (!(JsonString.equals("")))
             {JsonString = JsonString + ",";}
             JsonString = JsonString + "\"order_date\":\"" + order_date + "\"";}
@@ -58,7 +58,7 @@ public class Orders {
             {if (!(JsonString.equals("")))
             {JsonString = JsonString + ",";}
             JsonString = JsonString + "\"get_service_location_id\":" + get_service_location_id;}
-        if (!(get_date_time.equals("")))
+        if (get_date_time != null && !(get_date_time.equals("")))
             {if (!(JsonString.equals("")))
             {JsonString = JsonString + ",";}
             JsonString = JsonString + "\"get_date_time\":\"" + get_date_time + "\"";}
@@ -66,7 +66,7 @@ public class Orders {
             {if (!(JsonString.equals("")))
             {JsonString = JsonString + ",";}
             JsonString = JsonString + "\"put_service_location_id\":" + put_service_location_id;}
-        if (!(put_date_time.equals("")))
+        if (put_date_time != null && !(put_date_time.equals("")))
             {if (!(JsonString.equals("")))
             {JsonString = JsonString + ",";}
             JsonString = JsonString + "\"put_date_time\":\"" + put_date_time + "\"";}

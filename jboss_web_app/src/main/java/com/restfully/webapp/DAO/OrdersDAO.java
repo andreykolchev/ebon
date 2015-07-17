@@ -31,7 +31,7 @@ public class OrdersDAO {
                 TextQuery = MySQL.addLine(TextQuery);
                 TextQuery = TextQuery + "order_number = " + Integer.toString(order_number);
             }
-            if (!(order_date.equals(""))) {
+            if (order_date != null && !(order_date.equals(""))) {
                 TextQuery = MySQL.addLine(TextQuery);
                 TextQuery = TextQuery + "order_date = \"" + order_date + "\"";
             }
@@ -47,7 +47,7 @@ public class OrdersDAO {
                 TextQuery = MySQL.addLine(TextQuery);
                 TextQuery = TextQuery + "get_service_location_id = " + Integer.toString(get_service_location_id);
             }
-            if (!(get_date_time.equals(""))) {
+            if (get_date_time != null && !(get_date_time.equals(""))) {
                 TextQuery = MySQL.addLine(TextQuery);
                 TextQuery = TextQuery + "get_date_time = \"" + get_date_time + "\"";
             }
@@ -55,7 +55,7 @@ public class OrdersDAO {
                 TextQuery = MySQL.addLine(TextQuery);
                 TextQuery = TextQuery + "put_service_location_id = " + Integer.toString(put_service_location_id);
             }
-            if (!(put_date_time.equals(""))) {
+            if (put_date_time != null && !(put_date_time.equals(""))) {
                 TextQuery = MySQL.addLine(TextQuery);
                 TextQuery = TextQuery + "put_date_time = \"" + put_date_time + "\"";
             }
@@ -80,7 +80,7 @@ public class OrdersDAO {
                 if (order_number == 0) {
                     ordernumber = resultSet.getInt("order_number");
                 }
-                if (!(order_date.equals(""))) {
+                if (order_date != null && !(order_date.equals(""))) {
                     orderdate = resultSet.getString("order_date");
                 }
                 if (account_id == 0) {
@@ -92,13 +92,13 @@ public class OrdersDAO {
                 if (get_service_location_id == 0) {
                     getservicelocationid = resultSet.getInt("get_service_location_id");
                 }
-                if (!(get_date_time.equals(""))) {
+                if (get_date_time != null && !(get_date_time.equals(""))) {
                     getdatetime = resultSet.getString("get_date_time");
                 }
                 if (put_service_location_id == 0) {
                     putservicelocationid = resultSet.getInt("put_service_location_id");
                 }
-                if (!(put_date_time.equals(""))) {
+                if (put_date_time != null && !(put_date_time.equals(""))) {
                     putdatetime = resultSet.getString("put_date_time");
                 }
                 String description = resultSet.getString("description");
