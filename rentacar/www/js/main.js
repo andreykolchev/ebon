@@ -540,34 +540,39 @@ function bookCar() {
 }
 
 function bookAdditionalService(order_id) {
-
     var additionalServiceData = "";
-    
-    $('#additional_service_list li').each(function(i,elem) {
+
+    $('#additional_service_list li').each(function (i, elem) {
         var additional_service_id = elem.id;
         var additional_number = $(this).find(".additional_number").val();
         if (additional_number !== "") {
-           additionalServiceData = additionalServiceData + "" + additional_service_id + "," + additional_number+ ";";  
+            additionalServiceData = additionalServiceData + "" + additional_service_id + "," + additional_number + ";";
         }
     });
-   
-    var restURL = "WebApp/services/post/order_details";
-    var queryParam = "?orders_id="+order_id+"&additional_service_data="+additionalServiceData;
-    $.ajax({
-        url: rootURL + restURL + queryParam,
-        type: 'GET',
-        dataType: 'jsonp', 
-        jsonp: 'callback',
-        jsonpCallback: 'order_details',
-        timeout: 3000,
-        success: function (data) {
-            toast(ORDER_CREATE);
-            $.mobile.changePage($("#main_page"), {transition: "none"});
-        },
-        error: function () {
-            alert(ERROR);
-        }
-    });
+
+    if (additionalServiceData !== "") {
+        var restURL = "WebApp/services/post/order_details";
+        var queryParam = "?orders_id=" + order_id + "&additional_service_data=" + additionalServiceData;
+        $.ajax({
+            url: rootURL + restURL + queryParam,
+            type: 'GET',
+            dataType: 'jsonp',
+            jsonp: 'callback',
+            jsonpCallback: 'order_details',
+            timeout: 3000,
+            success: function (data) {
+                toast(ORDER_CREATE);
+                $.mobile.changePage($("#main_page"), {transition: "none"});
+            },
+            error: function () {
+                alert(ERROR);
+            }
+
+        });
+    } else {
+        toast(ORDER_CREATE);
+        $.mobile.changePage($("#main_page"), {transition: "none"});
+    }
 }
 
 /*-----------------------------ajax-----------------------------*/
