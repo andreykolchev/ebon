@@ -15,12 +15,12 @@ var current_currency_id = 3;
 var current_currency = "USD";
 
 var dataStorage = window.localStorage;
-//var localLanguage = dataStorage['localLanguage'];
-//var localLanguageId = dataStorage['localLanguageId'];
-//var rootURL = dataStorage['rootURL'];
-var localLanguage = 'ru';
-var localLanguageId = 2;
-var rootURL = "http://192.168.0.10:8090/";;
+var localLanguage = dataStorage['localLanguage'];
+var localLanguageId = dataStorage['localLanguageId'];
+var rootURL = dataStorage['rootURL'];
+//var localLanguage = 'ru';
+//var localLanguageId = 2;
+//var rootURL = "http://192.168.0.10:8090/";
 
 
 var LOADING;

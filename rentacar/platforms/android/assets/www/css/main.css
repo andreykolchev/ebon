@@ -167,6 +167,10 @@ ul.car_list li a{
       margin-top: 3px;
       margin-left: 20px;
     }
+    
+.currency_div {
+    background-color:#FFFFFF  !important;
+}  
 
 /*------------------------------CAR LIST--------------------------------*/
 
@@ -241,7 +245,7 @@ ul.car_list li a{
       margin-left: 10px;
       padding-left: 5px;
       font-weight: bold;
-      font-size: 30px;
+      font-size: 25px;
       color: darkgrey;
       border-style: solid;
       border-color: #E4E4E4; 
