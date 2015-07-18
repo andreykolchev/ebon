@@ -10,17 +10,17 @@ var is_drop_off_location;
 var current_coutry_id;
 var current_city_id;
 var current_car_id;
-var current_account_id =1;
+var current_account_id = 1;
 var current_currency_id = 3;
 var current_currency = "USD";
 
 var dataStorage = window.localStorage;
-var localLanguage = dataStorage['localLanguage'];
-var localLanguageId = dataStorage['localLanguageId'];
-var rootURL = dataStorage['rootURL'];
-//var localLanguage = 'ru';
-//var localLanguageId = 2;
-//var rootURL = "http://192.168.0.10:8090/";
+//var localLanguage = dataStorage['localLanguage'];
+//var localLanguageId = dataStorage['localLanguageId'];
+//var rootURL = dataStorage['rootURL'];
+var localLanguage = 'ru';
+var localLanguageId = 2;
+var rootURL = "http://192.168.0.10:8090/";;
 
 
 var LOADING;
@@ -227,7 +227,6 @@ $('#currency_list3').on('click', 'li a', function () {
     $( "#popupCurrency3" ).popup("close");
     showCarInformation();
 });
-
 /*-----------------------------list-----------------------------*/
 
 
@@ -254,6 +253,12 @@ $(document).on('pageshow', '#select_country', function () {
     buildInterface();
     showLoadingMsg();
     showCountries();
+});
+
+$(document).on('pageshow', '#select_payment_cards', function () {
+    buildInterface();
+    showLoadingMsg();
+    showPaymentCards();
 });
 
 $(document).on('pageshow', '#select_city', function () {
@@ -311,6 +316,32 @@ function fillCurrency(popupCurrency) {
 
 }
 
+function showPaymentCards() {
+    var restURL = "WebApp/services/get/payment_cards",
+            queryParam = "?account_id=" + current_account_id;
+    $('#payment_cards_list li').remove();
+    $.ajax({
+        url: rootURL + restURL + queryParam,
+        type: 'GET',
+        dataType: "jsonp",
+        jsonp: 'callback',
+        jsonpCallback: 'payment_cards',
+        timeout: 3000,
+        success: function (data) {
+            $.each(data, function (i, row) {
+                $('#payment_cards_list').append('<li><a href="#" data-identity="' + row.id + '">' + row.name + '</a></li>');
+            });
+            $("#payment_cards_list").listview("refresh");
+        },
+        error: function () {
+            alert(ERROR);
+            $.mobile.changePage($("#account_page"), {transition: "none"});
+        },
+        complete: function () {
+            $.mobile.loading('hide');
+        }
+    });
+}
 
 function showCountries() {
     var restURL = "WebApp/services/get/country";
@@ -367,7 +398,6 @@ function showCities() {
         }
     });
 }
-
 
 function showLocations() {
     var restURL = "WebApp/services/get/service_location";
@@ -468,7 +498,7 @@ function showAdditionalService() {
         timeout: 3000,
         success: function (data) {
             $.each(data, function (i, row) {
-                $('#additional_service_list').append('<li>' + '<a href="#" data-identity="' + row.id + '">' +  buildAdditionalServiceHTML(row) + '</a>' + '</li>');   
+                $('#additional_service_list').append('<li id=' + row.id + '>' + '<a href="#>' +  buildAdditionalServiceHTML(row) + '</a>' + '</li>');   
             });
              $("#additional_service_list").listview("refresh");
         },
@@ -481,7 +511,69 @@ function showAdditionalService() {
     });
 }
 
- 
+function bookCar() {
+    var new_order_id;
+    var restURL = "WebApp/services/post/orders";
+    var queryParam = "?account_id=" + current_account_id +
+            "&car_id=" + current_car_id +
+            "&get_service_location_id=" + pick_up_location_id +
+            "&get_date_time=" + getFormattedDate($('#pick_up_date').datebox('getTheDate'), $('#pick_up_time').datebox('getTheDate')) +
+            "&put_service_location_id=" + ((drop_off_location_id > 0) ? drop_off_location_id : pick_up_location_id) +
+            "&put_date_time=" + getFormattedDate($('#drop_off_date').datebox('getTheDate'), $('#drop_off_time').datebox('getTheDate'));
+    $.ajax({
+        url: rootURL + restURL + queryParam,
+        type: 'GET',
+        dataType: 'jsonp',
+        jsonp: 'callback',
+        jsonpCallback: 'order',
+        timeout: 3000,
+        success: function (data) {
+            $.each(data, function (i, row) {
+                new_order_id = row.id;
+            });
+            bookAdditionalService(new_order_id);
+        },
+        error: function () {
+            alert(ERROR);
+        }
+    });
+}
+
+function bookAdditionalService(order_id) {
+
+    var additionalServiceData = "";
+    
+    $('#additional_service_list li').each(function(i,elem) {
+        var additional_service_id = elem.id;
+        var additional_number = $(this).find(".additional_number").val();
+        if (additional_number !== "") {
+           additionalServiceData = additionalServiceData + "" + additional_service_id + "," + additional_number+ ";";  
+        }
+    });
+   
+    var restURL = "WebApp/services/post/order_details";
+    var queryParam = "?orders_id="+order_id+"&additional_service_data="+additionalServiceData;
+    $.ajax({
+        url: rootURL + restURL + queryParam,
+        type: 'GET',
+        dataType: 'jsonp', 
+        jsonp: 'callback',
+        jsonpCallback: 'order_details',
+        timeout: 3000,
+        success: function (data) {
+            toast(ORDER_CREATE);
+            $.mobile.changePage($("#main_page"), {transition: "none"});
+        },
+        error: function () {
+            alert(ERROR);
+        }
+    });
+}
+
+/*-----------------------------ajax-----------------------------*/
+
+
+/*-----------------------------buildHTML-----------------------------*/
 function buildCarInfoHTML(row) {
     
     var CarInfoHTML;
@@ -524,38 +616,10 @@ function buildAdditionalServiceHTML(row) {
             '<div class="additional_price"> month: '+ current_currency +  ' ' +  row.price_month +'</div>' + 
         '</div>' +
         '<div class="additional_right">' +
-            '<input id="additional_number" class="additional_number" type="number" value="">'+
+            '<input class="additional_number" type="number" value="">'+
         '</div>' +
     '</div>';
   
     return AdditionalServiceHTML;
  }
- 
-function bookCar() {
-    var restURL = "WebApp/services/post/orders";
-    var queryParam = "?account_id="+current_account_id+
-                     "&car_id="+current_car_id+
-                     "&get_service_location_id="+pick_up_location_id +
-                     "&get_date_time="+getFormattedDate($('#pick_up_date').datebox('getTheDate'),$('#pick_up_time').datebox('getTheDate'))+
-                     "&put_service_location_id="+ ((drop_off_location_id>0) ? drop_off_location_id : pick_up_location_id)+     
-                     "&put_date_time="+getFormattedDate($('#drop_off_date').datebox('getTheDate'),$('#drop_off_time').datebox('getTheDate'));
-    $.ajax({
-        url: rootURL + restURL + queryParam,
-        type: 'GET',
-        dataType: 'jsonp', 
-        jsonp: 'callback',
-        jsonpCallback: 'order',
-        timeout: 3000,
-        success: function () {
-            toast(ORDER_CREATE);
-            $.mobile.changePage($("#main_page"), {transition: "none"});
-        },
-        error: function () {
-            alert(ERROR);
-        }
-    });
-}
-/*-----------------------------ajax-----------------------------*/
-
-
-
+/*-----------------------------buildHTML-----------------------------*/

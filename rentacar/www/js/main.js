@@ -532,9 +532,6 @@ function bookCar() {
                 new_order_id = row.id;
             });
             bookAdditionalService(new_order_id);
-
-            //toast(ORDER_CREATE);
-            //$.mobile.changePage($("#main_page"), {transition: "none"});
         },
         error: function () {
             alert(ERROR);
@@ -561,9 +558,9 @@ function bookAdditionalService(order_id) {
         type: 'GET',
         dataType: 'jsonp', 
         jsonp: 'callback',
-        jsonpCallback: 'order',
+        jsonpCallback: 'order_details',
         timeout: 3000,
-        success: function () {
+        success: function (data) {
             toast(ORDER_CREATE);
             $.mobile.changePage($("#main_page"), {transition: "none"});
         },

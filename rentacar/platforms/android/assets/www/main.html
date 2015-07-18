@@ -219,7 +219,7 @@
         <ul id="account_list" class="account_list" data-role="listview">
             <li><a href="#account_settings">Account settings</a></li>
             <li><a href="#account_drivers">Drivers</a></li>
-            <li><a href="#account_pay_cards">Pay cards</a></li>
+            <li><a href="#select_payment_cards">Pay cards</a></li>
         </ul>
     </div>
 </div>
@@ -244,15 +244,15 @@
             <label id="label_date_of_birth">date of birth</label>
             <input id="date_of_birth" name="date_of_birth" type="date">
         </div>
+        <div id="pass_div">
+            <label id="label_pass">password</label>
+            <input id="pass" name="pass" type="password">
+        </div>
         <div class="currency_div"> 
             <a href="#popupCurrency1" data-rel="popup" class="buttonCurrency ui-btn ui-btn-corner-all ui-btn-inline ui-icon-gear ui-btn-icon-left">USD</a>
             <div data-role="popup" id="popupCurrency1" data-theme="a">
                  <ul id="currency_list1" data-role="listview" data-inset="true" style="min-width:210px;"> </ul>
             </div>
-        </div>
-        <div id="pass_div">
-            <label id="label_pass">password</label>
-            <input id="pass" name="pass" type="password">
         </div>
      </div>
 </div>
@@ -266,7 +266,7 @@
     </div>
     <div data-role="content">Drivers</div>
 </div>
-<div data-role="page" id="account_pay_cards" data-theme="a">
+<div data-role="page" id="select_payment_cards" data-theme="a">
     <div data-role="header" data-position="fixed">
         <a class="buttonBack  ui-btn-left" href="#account_page" data-icon="carat-l" data-transition="none">Back</a>
         <div class="head">
@@ -274,11 +274,56 @@
         </div>
         <a class="buttonHome  ui-btn-right" href="#main_page" data-icon="home" data-transition="none">Home</a>
     </div>
-    <div data-role="content">Pay cards</div>
+    <div data-role="content">Pay cards
+        <ul id="payment_cards_list" data-role="listview" data-filter="true" data-filter-placeholder=""  data-inset="true">  </ul>
+        <div class="table">
+            <div class="row">
+                <div class="col c25">1</div><div class="col c25">2</div><div class="col c25">3</div><div class="col c25">4</div>
+            </div>
+            <div class="row">
+                <div class="col c25">5</div><div class="col c25">6</div><div class="col c25">7</div><div class="col c25">8</div>
+            </div>
+        </div>
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <a class="buttonAddCard ui-btn-left" href="#pay_card_page" data-transition="none">Add</a>
+        <a class="buttonDeleteCard ui-btn-right" href="#pay_card_page" data-transition="none">Delete</a>
+    </div>
 </div>
-
-
 <!--**************************ACCOUNT PAGE**************************-->
+
+<!--***************************PAY CARD PAGE***************************-->
+<div data-role="page" id="pay_card_page" data-theme="a"> 
+    <div data-role="header" data-position="fixed">
+        <a class="buttonBack  ui-btn-left" href="#select_payment_cards" data-icon="carat-l" data-transition="none">Back</a>
+        <div class="head">
+            <img class="head_img" alt="Header" src="img/icon.png"/>
+        </div>
+        <a class="buttonHome  ui-btn-right" href="#main_page" data-icon="home" data-transition="none">Home</a>
+    </div>
+    <div data-role="content"> Pay card
+        <div id="holder_name_div">
+            <label id="label_holder_name">Holder Name</label>
+            <input id="holder_name" name="holder_name" type="text">
+        </div>
+        <div id="number_div">
+            <label id="label_number">Number</label>
+            <input id="number" name="number" type="number">
+        </div>
+        <div id="end_month_div">
+            <label id="label_end_month">End month</label>
+            <input id="end_month" name="end_month" type="number">
+        </div>
+        <div id="end_year_div">
+            <label id="label_end_year">End year</label>
+            <input id="end_year" name="end_year" type="number">
+        </div>
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <a class="buttonSaveCard ui-btn-left" href="#account_pay_cards" data-transition="none">Save</a>
+    </div>
+</div> 
+<!--***************************PAY CARD PAGE**************************-->
 
 <!--**************************CONTACT PAGE**************************-->
 <div data-role="page" id="contact_page" data-theme="a">
