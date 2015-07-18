@@ -35,7 +35,7 @@ public class Order_details {
             JsonString = JsonString + "\"additional_service_id\":" + additional_service_id;}
         {if (!(JsonString.equals("")))
             {JsonString = JsonString + ",";}
-            JsonString = JsonString + "\"number\":" + number
+            JsonString = JsonString + "\"number\":" + number + ","
                     + "\"price\":" + price;}
         return ("{"+JsonString+"}");
     }
