@@ -20,7 +20,8 @@ var dataStorage = window.localStorage;
 //var rootURL = dataStorage['rootURL'];
 var localLanguage = 'ru';
 var localLanguageId = 2;
-var rootURL = "http://134.249.132.85:8090/";
+//var rootURL = "http://134.249.132.85:8090/";
+var rootURL = "http://localhost:8080/";
 
 
 var LOADING;
@@ -327,7 +328,7 @@ function showPaymentCards() {
         dataType: "jsonp",
         jsonp: 'callback',
         jsonpCallback: 'payment_cards',
-        timeout: 3000,
+        timeout: 3000000000000000,
         success: function (data) {
             $.each(data, function (i, row) {
                 $('#payment_cards_list').append('<li><a href="#" data-identity="' + row.id + '">' + row.name + '</a></li>');
@@ -355,7 +356,7 @@ function showCountries() {
         dataType: 'jsonp',
         jsonp: 'callback',
         jsonpCallback: 'countires',
-        timeout: 3000,
+        timeout: 3000000000000000,
         success: function (data) {
             $.each(data, function (i, row) {
                 $('#country_list').append('<li><a href="#" data-identity="' + row.id + '">' + row.name + '</a></li>');
