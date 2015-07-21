@@ -328,7 +328,7 @@ function showPaymentCards() {
         dataType: "jsonp",
         jsonp: 'callback',
         jsonpCallback: 'payment_cards',
-        timeout: 3000000000000000,
+        timeout: 3000,
         success: function (data) {
             $.each(data, function (i, row) {
                 $('#payment_cards_list').append('<li><a href="#" data-identity="' + row.id + '">' + row.name + '</a></li>');
