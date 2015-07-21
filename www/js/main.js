@@ -331,7 +331,7 @@ function showPaymentCards() {
         timeout: 3000,
         success: function (data) {
             $.each(data, function (i, row) {
-                $('#payment_cards_list').append('<li><a href="#" data-identity="' + row.id + '">' + row.name + '</a></li>');
+                $('#payment_cards_list').append('<li><a href="#" data-identity="' + row.id + '">' + buildPayment_CardsInfoHTML(row) + '</a></li>');
             });
             $("#payment_cards_list").listview("refresh");
         },
@@ -442,7 +442,7 @@ function showCars() {
         timeout: 3000,
         success: function (data) {
             $.each(data, function (i, row) {
-                $('#car_list').append('<li>' + '<a href="#" data-identity="' + row.id + '">' +  buildCarInfoHTML(row) + '</a>' + '</li>');   
+                $('#car_list').append('<li>' + '<a href="#" data-identity="' + row.id + '">' +  buildCarInfoHTML(row) + '</a>' + '</li>');
             });
             $("#car_list").listview("refresh");
             buildInterface();
@@ -537,6 +537,27 @@ function buildCarInfoHTML(row) {
     '</div>';
   
     return CarInfoHTML;
+ }
+ 
+ function buildPayment_CardsInfoHTML(row) {
+    
+    var Payment_CardsInfoHTML;
+    
+    Payment_CardsInfoHTML =
+    '<div class="additional_header">'+
+        '<div class="additional_header_name">' + row.number + '</div>' +
+    '</div>'+
+    '<div class="additional_container">' +
+        '<div class="additional_center">' +
+            '<div class="additional_price"> holder name: ' +  row.holder_name +'</div>' + 
+            '<div class="additional_price"> end month: ' +  row.end_month +'</div>' + 
+            '<div class="additional_price"> end year: ' +  row.end_year +'</div>' + 
+        '</div>' +
+    '</div>';
+            
+    
+  
+    return Payment_CardsInfoHTML;
  }
  
 function buildAdditionalServiceHTML(row) {
