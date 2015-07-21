@@ -119,7 +119,7 @@ public class PostRESTService {
     public String createOrder (@QueryParam("callback") String callback,
                                @QueryParam("description") String description,
                                @QueryParam("account_id") int account_id,
-                               @QueryParam("car_id") int car_id,
+                               @QueryParam("model_id") int model_id,
                                @QueryParam("get_service_location_id") int get_service_location_id,
                                @QueryParam("get_date_time") String get_date_time,
                                @QueryParam("put_service_location_id") int put_service_location_id,
@@ -128,7 +128,7 @@ public class PostRESTService {
         int id = 0;
         String Date = "";
         
-        Orders orders = new Orders(id, id, Date, description, account_id, car_id, get_service_location_id, get_date_time, put_service_location_id, put_date_time);
+        Orders orders = new Orders(id, id, Date, description, account_id, model_id, get_service_location_id, get_date_time, put_service_location_id, put_date_time);
            
         orders = ordersDAO.create(orders);
         

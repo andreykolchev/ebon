@@ -18,7 +18,7 @@ public class OrdersDAO {
     private ResultSet resultSet = null;
     private static final Logger log = Logger.getLogger(OrdersDAO.class.getName());
 
-    public List<Orders> find(int id, int order_number, String order_date, int account_id, int car_id, int get_service_location_id, String get_date_time, int put_service_location_id, String put_date_time) throws SQLException {
+    public List<Orders> find(int id, int order_number, String order_date, int account_id, int model_id, int get_service_location_id, String get_date_time, int put_service_location_id, String put_date_time) throws SQLException {
         List<Orders> ordersList = new ArrayList<Orders>();
         String TextQuery;
         try {
@@ -39,9 +39,9 @@ public class OrdersDAO {
                 TextQuery = MySQL.addLine(TextQuery);
                 TextQuery = TextQuery + "account_id = " + Integer.toString(account_id);
             }
-            if (car_id != 0) {
+            if (model_id != 0) {
                 TextQuery = MySQL.addLine(TextQuery);
-                TextQuery = TextQuery + "car_id = " + Integer.toString(car_id);
+                TextQuery = TextQuery + "model_id = " + Integer.toString(model_id);
             }
             if (get_service_location_id != 0) {
                 TextQuery = MySQL.addLine(TextQuery);
@@ -60,7 +60,7 @@ public class OrdersDAO {
                 TextQuery = TextQuery + "put_date_time = \"" + put_date_time + "\"";
             }
             TextQuery = TextQuery + ";";
-            String selectSQL = "SELECT id, order_number, order_date, description, account_id, car_id, get_service_location_id, get_date_time, put_service_location_id, put_date_time FROM orders" + TextQuery;
+            String selectSQL = "SELECT id, order_number, order_date, description, account_id, model_id, get_service_location_id, get_date_time, put_service_location_id, put_date_time FROM orders" + TextQuery;
             connection = MySQL.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(selectSQL);
@@ -69,7 +69,7 @@ public class OrdersDAO {
                 int ordernumber = 0;
                 String orderdate = "";
                 int accountid = 0;
-                int carid = 0;
+                int modelid = 0;
                 int getservicelocationid = 0;
                 String getdatetime = "";
                 int putservicelocationid = 0;
@@ -86,8 +86,8 @@ public class OrdersDAO {
                 if (account_id == 0) {
                     accountid = resultSet.getInt("account_id");
                 }
-                if (car_id == 0) {
-                    carid = resultSet.getInt("car_id");
+                if (model_id == 0) {
+                    modelid = resultSet.getInt("model_id");
                 }
                 if (get_service_location_id == 0) {
                     getservicelocationid = resultSet.getInt("get_service_location_id");
@@ -102,7 +102,7 @@ public class OrdersDAO {
                     putdatetime = resultSet.getString("put_date_time");
                 }
                 String description = resultSet.getString("description");
-                Orders orders = new Orders(id_this, ordernumber, orderdate, description, accountid, carid, getservicelocationid, getdatetime, putservicelocationid, putdatetime);
+                Orders orders = new Orders(id_this, ordernumber, orderdate, description, accountid, modelid, getservicelocationid, getdatetime, putservicelocationid, putdatetime);
                 ordersList.add(orders);
             }
             return ordersList;
@@ -129,7 +129,7 @@ public class OrdersDAO {
                     + " order_number,"
                     + " order_date,"
                     + " account_id,"
-                    + " car_id,"
+                    + " model_id,"
                     + " get_service_location_id,"
                     + " get_date_time,"
                     + " put_service_location_id,"
@@ -139,7 +139,7 @@ public class OrdersDAO {
                     + "'" + Integer.toString(orders.order_number) + "', "
                     + "'" + orders.order_date + "', "
                     + Integer.toString(orders.account_id) + ", "
-                    + Integer.toString(orders.car_id) + ", "
+                    + Integer.toString(orders.model_id) + ", "
                     + Integer.toString(orders.get_service_location_id) + ", "
                     + "'" + orders.get_date_time + "', "
                     + Integer.toString(orders.put_service_location_id) + ", "
