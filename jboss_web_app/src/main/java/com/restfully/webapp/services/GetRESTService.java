@@ -14,6 +14,7 @@ import com.restfully.webapp.DAO.Currency_exchangeDAO;
 import com.restfully.webapp.DAO.DriverDAO;
 import com.restfully.webapp.DAO.InterfaceItemDAO;
 import com.restfully.webapp.DAO.LanguageDAO;
+import com.restfully.webapp.DAO.ModelDAO;
 import com.restfully.webapp.DAO.Order_detailsDAO;
 import com.restfully.webapp.DAO.OrdersDAO;
 import com.restfully.webapp.DAO.Payment_cardsDAO;
@@ -28,6 +29,7 @@ import com.restfully.webapp.model.Currency_exchange;
 import com.restfully.webapp.model.Driver;
 import com.restfully.webapp.model.InterfaceItem;
 import com.restfully.webapp.model.Language;
+import com.restfully.webapp.model.Model;
 import com.restfully.webapp.model.Order_details;
 import com.restfully.webapp.model.Orders;
 import com.restfully.webapp.model.Payment_cards;
@@ -57,6 +59,7 @@ public class GetRESTService {
     private final OrdersDAO ordersDAO = new OrdersDAO();
     private final Payment_cardsDAO payment_cardsDAO = new Payment_cardsDAO();
     private final Service_locationDAO service_locationDAO = new Service_locationDAO();
+    private final ModelDAO modelDAO = new ModelDAO();
     
     @GET
     @Path("/account")
@@ -119,6 +122,27 @@ public class GetRESTService {
         for (Car car : carList) {
             jsonStringBuilder.append(car.toJsonString());
             if (++i < carList.size()) {
+                jsonStringBuilder.append(",");
+            }
+        }
+        return (callback + "([" + jsonStringBuilder.toString() + "])");
+    }
+    
+    @GET
+    @Path("/model")
+    @Produces("application/javascript")
+    public String getModel (@QueryParam("callback") String callback, 
+                          @QueryParam("model_id") int model_id, 
+                          @QueryParam("language_id") int language_id,
+                          @QueryParam("currency_id") int currency_id
+                         )  throws SQLException{
+        List<Model> modelList = modelDAO.find(model_id, language_id, currency_id);
+        if (modelList.isEmpty()) {return (callback + "()");}
+        StringBuilder jsonStringBuilder = new StringBuilder();
+        int i = 0;
+        for (Model model : modelList) {
+            jsonStringBuilder.append(model.toJsonString());
+            if (++i < modelList.size()) {
                 jsonStringBuilder.append(",");
             }
         }
