@@ -9,18 +9,18 @@ var is_drop_off_location;
 
 var current_coutry_id;
 var current_city_id;
-var current_car_id;
+var current_model_id;
 var current_account_id = 1;
 var current_currency_id = 3;
 var current_currency = "USD";
 
 var dataStorage = window.localStorage;
-var localLanguage = dataStorage['localLanguage'];
-var localLanguageId = dataStorage['localLanguageId'];
-var rootURL = dataStorage['rootURL'];
-//var localLanguage = 'ru';
-//var localLanguageId = 2;
-//var rootURL = "http://192.168.0.10:8090/";
+//var localLanguage = dataStorage['localLanguage'];
+//var localLanguageId = dataStorage['localLanguageId'];
+//var rootURL = dataStorage['rootURL'];
+var localLanguage = 'ru';
+var localLanguageId = 2;
+var rootURL = "http://192.168.0.10:8090/";
 
 
 var LOADING;
@@ -199,7 +199,7 @@ $('#location_list').on('click', 'li a', function () {
 });
 
 $('#car_list').on('click', 'li a', function () {
-    current_car_id = $(this).data('identity');
+    current_model_id = $(this).data('identity');
     $.mobile.changePage($("#car_information"), {transition: "none"});
 });
 
@@ -427,7 +427,7 @@ function showLocations() {
 }
 
 function showCars() {
-    var restURL = "WebApp/services/get/car";
+    var restURL = "WebApp/services/get/model";
     var queryParam = "?location_id=" + pick_up_location_id + "&language_id=" + localLanguageId+ "&currency_id=" + current_currency_id;
     $('#car_list li').remove();
     $.ajax({
@@ -435,7 +435,7 @@ function showCars() {
         type: 'GET',
         dataType: "jsonp",
         jsonp: 'callback',
-        jsonpCallback: 'cars',
+        jsonpCallback: 'model',
         timeout: 3000,
         success: function (data) {
             $.each(data, function (i, row) {
@@ -457,15 +457,15 @@ function showCars() {
 
 function showCarInformation() {
   
-    var restURL = "WebApp/services/get/car";
-    var queryParam = "?car_id=" + current_car_id + "&language_id=" + localLanguageId + "&currency_id=" + current_currency_id;   
+    var restURL = "WebApp/services/get/model";
+    var queryParam = "?model_id=" + current_model_id + "&language_id=" + localLanguageId + "&currency_id=" + current_currency_id;   
     
     $.ajax({
         url: rootURL + restURL + queryParam,
         type: 'GET',
         dataType: "jsonp",
         jsonp: 'callback',
-        jsonpCallback: 'car',
+        jsonpCallback: 'model',
         timeout: 3000,
         success: function (data) {
             $.each(data, function (i, row) {
@@ -515,7 +515,7 @@ function bookCar() {
     var new_order_id;
     var restURL = "WebApp/services/post/orders";
     var queryParam = "?account_id=" + current_account_id +
-            "&car_id=" + current_car_id +
+            "&model_id=" + current_model_id +
             "&get_service_location_id=" + pick_up_location_id +
             "&get_date_time=" + getFormattedDate($('#pick_up_date').datebox('getTheDate'), $('#pick_up_time').datebox('getTheDate')) +
             "&put_service_location_id=" + ((drop_off_location_id > 0) ? drop_off_location_id : pick_up_location_id) +
