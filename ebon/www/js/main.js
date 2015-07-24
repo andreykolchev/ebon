@@ -48,7 +48,7 @@ $(document).on("pageshow", "#map_page", function() {
     });
     max_height();    
         
-    var defaultLatLng = new google.maps.LatLng(50.45, 30.52);  // Default to Hollywood, CA when no geolocation support
+    var defaultLatLng = new google.maps.LatLng(50.450101, 30.523403);  // Default to Hollywood, CA when no geolocation support
     if ( navigator.geolocation) {
         function success(pos) {
             // Location found, show map with these coordinates
