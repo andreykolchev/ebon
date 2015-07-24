@@ -48,8 +48,10 @@ $(document).on("pageshow", "#map_page", function() {
     });
     max_height();    
         
+
     // Default to Kiev when no geolocation support        
-    var defaultLatLng = new google.maps.LatLng(50.45, 30.52);  
+    var defaultLatLng = new google.maps.LatLng(50.450101, 30.523403);
+
     if ( navigator.geolocation) {
         function success(pos) {
             // Location found, show map with these coordinates
