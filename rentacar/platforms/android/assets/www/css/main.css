@@ -1,0 +1,286 @@
+/*-----------------------------MAIN PAGE-----------------------------*/
+.head {
+    line-height: 40px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.head_img {
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+}
+
+#button1_div {
+    width: 48.3146%;
+    height: 120px;
+    float: left;
+}
+#button2_div {
+    width: 48.3146%;
+    height: 120px;
+    float:  left; 
+    margin-left: 10px;
+}
+#button3_div {
+    width: 48.3146%;
+    height: 120px;
+    float: left; 
+    margin-top: 2px;
+}
+#button4_div {
+    width: 48.3146%;
+    height: 120px;
+    float: left; 
+    margin-top: 2px;
+    margin-left: 10px;
+}
+#buttonAdd {
+    margin : 5px;
+    background-repeat: no-repeat;
+    background-position: 50% 20px;
+    background-image: url(../img/book.png);
+    background-size: 3em 3em;
+    font-size: small;
+    font-family: chewy;
+    font-style: normal;
+    padding-top: 75px;
+}
+#buttonFind {
+    margin : 5px;
+    background-repeat: no-repeat;
+    background-position: 50% 20px;
+    background-image: url(../img/gas.png);
+    background-size: 3em 3em;
+    font-size: small;
+    font-family: chewy;
+    font-style: normal;
+    padding-top: 75px;
+}
+#buttonAccount {
+    margin : 5px;
+    background-repeat: no-repeat;
+    background-position: 50% 20px;
+    background-image: url(../img/account.png);
+    background-size: 3em 3em;
+    font-size: small;
+    font-family: chewy;
+    font-style: normal;
+    padding-top: 75px;
+}
+#buttonCall {
+    margin : 5px;
+    background-repeat: no-repeat;
+    background-position: 50% 20px;
+    background-image: url(../img/call.png);
+    background-size: 3em 3em;
+    font-size: small;
+    font-family: chewy;
+    font-style: normal;
+    padding-top: 75px;
+}
+
+/*-----------------------------MAIN PAGE-----------------------------*/
+
+
+
+/*-----------------------------BOOKING PAGE-----------------------------*/
+.ui-block-b#pick_up_d,#drop_off_d{
+    padding-left: 3px;
+}
+
+#drop_off_location_div {
+    display: none;
+}
+
+#driver_age_div {
+    display: none;
+    width: 50px;
+}
+
+#pick_up_location {
+    height: 15px;
+    background-color: #ffffff;
+    font-weight: normal;
+    text-align: left;
+}
+
+#drop_off_location {
+    height: 15px;
+    background-color: #ffffff;
+    font-weight: normal;
+    text-align: left;
+}
+/*-----------------------------BOOKING PAGE-----------------------------*/
+
+/*------------------------------CAR LIST--------------------------------*/
+.info {
+    background-color: #666666;
+    font-weight: 100;
+    font-size: small;
+    text-align: center;
+    color: #FFFFFF; 
+}
+.currency_div {
+   padding-left: 10px; 
+}
+
+ul.car_list li a{
+   background-color:#FFFFFF  !important;
+ }
+
+.car_info_header {
+    float: left; 
+    height: 25px;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: left;
+    color: #669900; 
+}
+
+.car_info_container {
+   margin-top: 30px;
+   color: dimgray;
+   height: 80px;
+   font-weight: 100;
+   font-size: 12px;
+   padding: 5px;
+}
+
+.car_info_left {
+    float: left; 
+}
+
+.car_info_center {
+    float: left; 
+    color: darkgrey;
+}
+
+.car_info_right {
+    float: left; 
+    margin-left: 5px;
+    margin-top: 5px;
+}
+    .car_info_price {
+      font-size: 15px;
+      font-weight: bold;
+      margin-top: 3px;
+      margin-left: 20px;
+    }
+    
+.currency_div {
+    background-color:#FFFFFF  !important;
+}  
+
+/*------------------------------CAR LIST--------------------------------*/
+
+
+/*------------------------------CAR INFO--------------------------------*/
+#car_info {
+   background-color: #FFFFFF;
+   padding: 10px;
+   border-style: solid;
+   border-color: #E4E4E4; 
+   border-width: 1px;
+   border-radius: 5px;
+}
+
+.car_img {
+  width: 100px;
+  height: 80px;
+ }
+ /*------------------------------CAR INFO--------------------------------*/
+ 
+ /*------------------------------ADDITIONAL SERVICE----------------------*/
+ #additional_service_info {
+   margin-top: 5px;
+   background-color: #ffffff;
+   border-style: solid;
+   border-color: #E4E4E4; 
+   border-width: 1px;
+   border-radius: 5px;
+}
+
+#additional_service_list{
+    margin: 10px;
+    border-style: solid;
+    border-color: #E4E4E4;  
+    border-width: 1px;
+    border-radius: 3px;
+}
+ 
+.additional_header {
+    float: left; 
+    font-weight: bold;
+    font-size: 15px;
+    text-align: left;
+    color: #669900; 
+}
+
+.additional_container {
+   margin-top: 10px;
+   height: 15px;
+}
+
+.additional_left {
+    float: left; 
+}
+.additional_center {
+    float: left; 
+ }
+    .additional_price {
+      font-size: 13px;
+      font-weight: bold;
+      color: darkgrey;
+      width: auto;
+      margin-top: 3px;
+      margin-left: 20px;
+    }
+
+.additional_right {
+    float: left; 
+}
+    .additional_number {
+      width: 35px;
+      margin-left: 10px;
+      padding-left: 5px;
+      font-weight: bold;
+      font-size: 25px;
+      color: darkgrey;
+      border-style: solid;
+      border-color: #E4E4E4; 
+    }
+
+.additional_img {
+  width: 50px;
+  height:  50px;
+}
+/*------------------------------ADDITIONAL SERVICE----------------------*/
+ 
+#buttonBook{
+    background-color: #ff9933;
+    color: #FFFFFF;
+}
+
+/*------------------------------PAY CARDS----------------------*/
+.wrapper{
+    width:100%;   
+}
+
+.table{
+    display:table;   
+    width:100%;
+}
+
+.row{
+    display:table-row;   
+}
+
+.col{
+    display:table-cell; 
+    border:1px solid black;
+}
+
+.c25{
+    width:25%;   
+}
