@@ -48,7 +48,8 @@ $(document).on("pageshow", "#map_page", function() {
     });
     max_height();    
         
-    var defaultLatLng = new google.maps.LatLng(50.45, 30.52);  // Default to Hollywood, CA when no geolocation support
+    // Default to Kiev when no geolocation support        
+    var defaultLatLng = new google.maps.LatLng(50.45, 30.52);  
     if ( navigator.geolocation) {
         function success(pos) {
             // Location found, show map with these coordinates
